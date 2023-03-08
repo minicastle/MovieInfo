@@ -62,7 +62,7 @@ const NavItem = styled.li`
     cursor: pointer;
     white-space: nowrap;
     font-size: 40px;
-    color: #FFAACF;
+    color: ${(props)=>{return '#'+props.color}};
     text-shadow: 2px 4px 4px gray;
     user-select: none;
     :hover{
@@ -97,17 +97,17 @@ const FooterIcon = styled.li`
     }
 `;
 
-function NavBar() {
+function NavBar({page='home'}) {
     return (
         <Container>
             <Link to='/' ><Logo src='./MoverLogo.png'/></Link>
             <NavList>
-                <Link to='/daily' ><NavItem>Daily</NavItem></Link>
-                <Link to='/' ><NavItem>Search</NavItem></Link>
-                <Link to='/' ><NavItem>Month Update</NavItem></Link>
-                <Link to='/' ><NavItem>Movie Info</NavItem></Link>
-                <Link to='/' ><NavItem>Q&A</NavItem></Link>
-                <Link to='/' ><NavItem>Site Info</NavItem></Link>
+                <Link to='/daily'><NavItem color={page==='daily'?"B9F3E4":"FFAACF"}>Daily</NavItem></Link>
+                <Link to='/search' ><NavItem color={page==='search'?"B9F3E4":"FFAACF"}>Search</NavItem></Link>
+                <Link to='/update' ><NavItem color={page==='update'?"B9F3E4":"FFAACF"}>Month Update</NavItem></Link>
+                <Link to='/movie-info' ><NavItem color={page==='movie-info'?"B9F3E4":"FFAACF"}>Movie Info</NavItem></Link>
+                <Link to='/question' ><NavItem color={page==='question'?"B9F3E4":"FFAACF"}>Q&A</NavItem></Link>
+                <Link to='/site-info' ><NavItem color={page==='site-info'?"B9F3E4":"FFAACF"}>Site Info</NavItem></Link>
             </NavList>
             <Footer>
                 <FooterIcon><BsGithub/></FooterIcon>

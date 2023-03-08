@@ -7,9 +7,7 @@ const Container = styled.div`
     align-items: center;
     height: 100%;
     width: 100%;
-    background-color: #B9F3E4;
 `;
-
 function HomePage() {
     return (
         <Container>Homepage</Container>
