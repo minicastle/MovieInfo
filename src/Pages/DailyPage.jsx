@@ -69,7 +69,7 @@ const Main2 = styled.div`
     align-items: flex-start;
     height: 100%;
 `;
-function DailyPage() {
+function DailyPage({dailyData,posterData}) {
     const [movieNumber,setMovieNumber] = useState(1);
     const [play,setPlay] = useState(true);
     const dotGen = useCallback(()=>{

@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 import Homepage from './Pages/HomePage';
 import Navbar from './Components/NavBar';
 import DailyPage from './Pages/DailyPage';
-import axios from 'axios';
+import axios, { Axios } from 'axios';
 
 const Container = styled.div`
   display: flex;
@@ -18,23 +18,25 @@ const Container = styled.div`
 function App() {
   const [dailyData,setDailyData] = useState();
   const [posterData,setPosterData] = useState([]);
-  const getDailyData = useCallback(()=>{
+  /** 데일리 데이터 받아오기 */
+  const GetDailyData = useCallback(()=>{
     axios.get('/HerokuApi/Kobis/movie/daily?targetDt=20230307')
     .then((res)=>{
-      setDailyData(res);
-      getPosterData(res);
+      setDailyData(res.data);
+      for(let i = 0;i<res.data.length;i++){
+        GetPosterData(res.data[i].movieNm);
+      }
     });
-  },[])
-  const getPosterData = useCallback((e)=>{
-      e.data.forEach((value)=>{
-      axios.get(`/HerokuApi/KMDB/movie/info?title=${value.movieNm}`)
-      .then((res)=>{
-        setPosterData((posterData)=>{return [...posterData,res]});
-      });
+  },[]);
+  /** 포스터 데이터 받아오기 */
+  const GetPosterData = useCallback((e)=>{
+    axios.get(`/HerokuApi/Naver/movie/poster?title=${e}`).then((res)=>{
+      setPosterData((posterData)=>{return [...posterData,{movie:e,poster:res.data}]});
     });
-  },[])
+  },[]);
+
   useEffect(()=>{
-    getDailyData();
+    GetDailyData();
   },[])
   return (
     <Container>
@@ -49,7 +51,7 @@ function App() {
           <Route path='/daily' element={
             <>
               <Navbar page='daily'></Navbar>
-              <DailyPage></DailyPage>
+              <DailyPage dailyData={dailyData} posterData={posterData}></DailyPage>
             </>
           }/>
           <Route path='/search' element={
