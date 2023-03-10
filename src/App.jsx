@@ -17,26 +17,21 @@ const Container = styled.div`
 
 function App() {
   const [dailyData,setDailyData] = useState();
-  const [posterData,setPosterData] = useState([]);
   /** 데일리 데이터 받아오기 */
   const GetDailyData = useCallback(()=>{
     axios.get('/HerokuApi/Kobis/movie/daily?targetDt=20230307')
     .then((res)=>{
       setDailyData(res.data);
-      for(let i = 0;i<res.data.length;i++){
-        GetPosterData(res.data[i].movieNm);
-      }
-    });
-  },[]);
-  /** 포스터 데이터 받아오기 */
-  const GetPosterData = useCallback((e)=>{
-    axios.get(`/HerokuApi/Naver/movie/poster?title=${e}`).then((res)=>{
-      setPosterData((posterData)=>{return [...posterData,{movie:e,poster:res.data}]});
+    }).catch((error)=>{
+      setDailyData(error);
     });
   },[]);
 
   useEffect(()=>{
     GetDailyData();
+    return ()=>{
+      setDailyData();
+    }
   },[])
   return (
     <Container>
@@ -51,7 +46,7 @@ function App() {
           <Route path='/daily' element={
             <>
               <Navbar page='daily'></Navbar>
-              <DailyPage dailyData={dailyData} posterData={posterData}></DailyPage>
+              <DailyPage dailyData={dailyData}></DailyPage>
             </>
           }/>
           <Route path='/search' element={
