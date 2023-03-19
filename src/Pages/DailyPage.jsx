@@ -143,6 +143,7 @@ const RankTitle = styled.div`
   align-items: center;
   height: 100%;
   width: 260px;
+  font-weight: 700;
 `;
 /** rank 아이템 순위변동 */
 const RankInten = styled.div`
@@ -190,7 +191,9 @@ function DailyPage({ dailyData }) {
         <PosterDot
           onClick={() => {
             setMovieNumber(i + 1);
-            setPlay(false);
+            if (play) {
+              setPlay(false);
+            }
           }}
           key={`PosterDot${i}`}
           bgColor={movieNumber === i + 1 ? "000000" : "aaaaaa"}
@@ -211,7 +214,7 @@ function DailyPage({ dailyData }) {
             <RankNumber key={`RankItemNumber${i}`}>
               <Size20 key={`RankItemNumberText${i}`}>{e[i].rank}</Size20>
             </RankNumber>
-            <RankTitle key={`RankItemTitle${i}`}>
+            <RankTitle title={e[i].movieNm} key={`RankItemTitle${i}`}>
               <Size20 key={`RankItemTitleText${i}`}>{e[i].movieNm}</Size20>
             </RankTitle>
             <RankInten key={`RankItemInten${i}`}>
@@ -242,7 +245,7 @@ function DailyPage({ dailyData }) {
       }
       return contents;
     },
-    [movieNumber]
+    [movieNumber, dailyData]
   );
 
   useEffect(() => {
@@ -303,7 +306,9 @@ function DailyPage({ dailyData }) {
                   movieNumber === 1
                     ? setMovieNumber(10)
                     : setMovieNumber(movieNumber - 1);
-                  setPlay(false);
+                  if (play) {
+                    setPlay(false);
+                  }
                 }}
               />
               {dotGen()}
@@ -314,7 +319,9 @@ function DailyPage({ dailyData }) {
                   movieNumber === 10
                     ? setMovieNumber(1)
                     : setMovieNumber(movieNumber + 1);
-                  setPlay(false);
+                  if (play) {
+                    setPlay(false);
+                  }
                 }}
               />
             </PosterControl>

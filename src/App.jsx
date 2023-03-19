@@ -6,6 +6,8 @@ import Navbar from "./Components/NavBar";
 import DailyPage from "./Pages/DailyPage";
 import axios, { Axios } from "axios";
 import SearchPage from "./Pages/SearchPage";
+import "./Components/FontFormat.css";
+import { BuildProxy } from "./buildConfig/proxyConfig";
 
 const Container = styled.div`
   display: flex;
@@ -33,10 +35,15 @@ function App() {
   const fullDate = year + month + date;
   /** 데일리 데이터 받아오기 */
   const GetDailyData = useCallback(() => {
+    console.log(dailyData);
     axios
-      .get(`/HerokuApi/Kobis/movie/daily?targetDt=${fullDate}`)
+      .get(`${BuildProxy}/Kobis/movie/daily?targetDt=${fullDate}`)
       .then((res) => {
         setDailyData(res.data);
+        window.localStorage.setItem(
+          "dailyData" + fullDate,
+          JSON.stringify(res.data)
+        );
       })
       .catch((error) => {
         setDailyData(error);
@@ -44,8 +51,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (dailyData === undefined) {
+    let value = JSON.parse(window.localStorage.getItem("dailyData" + fullDate));
+    if (!value) {
+      console.log(1);
       GetDailyData();
+    } else {
+      console.log(value);
+      setDailyData(value);
     }
     return () => {
       setDailyData();

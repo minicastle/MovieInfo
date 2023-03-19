@@ -1,12 +1,14 @@
 import styled from "@emotion/styled";
 
 export const Size80Bold = styled.div`
+  user-select: none;
   color: ${(props) => {
     return props.color !== undefined ? "#" + props.color : "black";
   }};
   text-align: center;
   font-size: 80px;
   font-weight: bold;
+  font-family: "CM";
 `;
 
 export const Size40Bold = styled.div`

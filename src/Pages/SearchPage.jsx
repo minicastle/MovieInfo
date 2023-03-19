@@ -1,16 +1,263 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import styled from "@emotion/styled";
+import { Size80Bold } from "../Components/TextFormat";
+import { BsSearch } from "react-icons/bs";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import axios from "axios";
+import { BuildProxy } from "../buildConfig/proxyConfig";
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   height: 100%;
 `;
+const SearchBar = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  width: 100%;
+  margin-bottom: 20px;
+`;
+const SearchInput = styled.input`
+  display: flex;
+  font-size: 30px;
+  background-color: white;
+  width: 60%;
+  border-radius: 20px 0px 0px 20px;
+  padding: 5px 20px;
+  box-sizing: border-box;
+  border: 1px solid black;
+`;
+const SearchButton = styled.div`
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+  height: 46px;
+  width: 10%;
+  background-color: #8ea7e9;
+  border-radius: 0px 20px 20px 0px;
+  border: 1px solid black;
+  font-size: 30px;
+  color: white;
+  :active {
+    scale: 0.98;
+  }
+`;
+const SearchDataContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 70%;
+  height: 75%;
+  background-color: white;
+  border-radius: 10px;
+  overflow-y: scroll;
+`;
+const SearchInfoItem = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 25px;
+  font-weight: bold;
+  width: 100%;
+  height: 60px;
+  min-height: 60px;
+  background-color: ${(props) => {
+    return props.bgColor === undefined ? "white" : "#" + props.bgColor;
+  }};
+  position: sticky;
+  top: 0;
+`;
+const SearchDataItem = styled.div`
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 25px;
+  font-weight: bold;
+  width: 100%;
+  height: 60px;
+  min-height: 60px;
+  background-color: ${(props) => {
+    return props.bgColor === undefined ? "white" : "#" + props.bgColor;
+  }};
+`;
+const SearchDataTitle = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  padding: 0px 10px 0px;
+  align-items: center;
+  color: ${(props) => {
+    return props.color === undefined ? "black" : "#" + props.color;
+  }};
+  width: 60%;
+  height: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  white-space: nowrap;
+  overflow: hidden;
+  font-family: "CM";
+`;
+const SearchDataDate = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => {
+    return props.color === undefined ? "black" : "#" + props.color;
+  }};
+  width: 15%;
+  height: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  font-family: "CM";
+`;
+const SearchDataGenre = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => {
+    return props.color === undefined ? "black" : "#" + props.color;
+  }};
+  width: 25%;
+  height: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid black;
+  font-family: "CM";
+`;
+const NoData = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 50px;
+  font-weight: bold;
+  color: #ff6464;
+  font-family: "CM";
+`;
+const LoadingIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: LoadingRotate 2s linear infinite;
+  @keyframes LoadingRotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(365deg);
+    }
+  }
+`;
 
 function SearchPage() {
-  return <Container>SearchPage</Container>;
+  const [searchContents, setSearchContents] = useState("");
+  const [searchData, setSearchData] = useState();
+  const SearchItemGen = useCallback(() => {
+    let contents = [];
+    for (let i = 0; i < searchData.length; i++) {
+      contents.push(
+        <SearchDataItem key={`searchDataItem${i}`}>
+          <SearchDataTitle
+            title={searchData[i].movieNm}
+            key={`searchDataTitle${i}`}
+          >
+            {searchData[i].movieNm}
+          </SearchDataTitle>
+          <SearchDataDate key={`searchDataDate${i}`}>
+            {searchData[i].openDt}
+          </SearchDataDate>
+          <SearchDataGenre key={`searchDataGenre${i}`}>
+            {searchData[i].repGenreNm}
+          </SearchDataGenre>
+        </SearchDataItem>
+      );
+    }
+    return contents;
+  }, [searchData]);
+  return (
+    <Container>
+      <Size80Bold
+        color="332FD0"
+        style={{ textShadow: "2px 4px 4px rgba(0,0,0,0.4)" }}
+      >
+        Movie Search
+      </Size80Bold>
+      <SearchBar>
+        <BsSearch fontSize={"50px"} color="7286D3" />
+        <SearchInput
+          placeholder="Movie Title Typing Here"
+          value={searchContents}
+          onChange={(e) => {
+            setSearchContents(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              if (searchContents.length !== 0) {
+                e.target.value = "";
+                axios
+                  .get(
+                    `${BuildProxy}/Kobis/movie/search?movieNm=${searchContents}`
+                  )
+                  .then((res) => {
+                    setSearchData(res.data.movieList);
+                    setSearchContents("");
+                  });
+              } else {
+                alert("검색어를 입력하세요");
+              }
+            }
+          }}
+        ></SearchInput>
+        <SearchButton
+          onClick={() => {
+            if (searchContents.length !== 0) {
+              axios
+                .get(
+                  `${BuildProxy}/Kobis/movie/search?movieNm=${searchContents}`
+                )
+                .then((res) => {
+                  setSearchData(res.data.movieList);
+                  setSearchContents("");
+                });
+            } else {
+              alert("검색어를 입력하세요");
+            }
+          }}
+        >
+          Submit
+        </SearchButton>
+      </SearchBar>
+      <SearchDataContainer>
+        <SearchInfoItem bgColor="E4D0D0">
+          <SearchDataTitle color="FD8A8A">Title</SearchDataTitle>
+          <SearchDataDate color="FD8A8A">Date</SearchDataDate>
+          <SearchDataGenre color="FD8A8A">Genre</SearchDataGenre>
+        </SearchInfoItem>
+        {searchData === undefined ? (
+          <NoData>
+            <LoadingIcon>
+              <AiOutlineLoading3Quarters />
+            </LoadingIcon>
+            Data Empty
+          </NoData>
+        ) : (
+          <>{SearchItemGen()}</>
+        )}
+      </SearchDataContainer>
+    </Container>
+  );
 }
 
 export default SearchPage;
