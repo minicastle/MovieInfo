@@ -8,6 +8,7 @@ import axios, { Axios } from "axios";
 import SearchPage from "./Pages/SearchPage";
 import "./Components/FontFormat.css";
 import { BuildProxy } from "./buildConfig/proxyConfig";
+import MovieInfo from "./Pages/MovieInfo";
 
 const Container = styled.div`
   display: flex;
@@ -16,6 +17,10 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
   background-color: #b9f3e4;
+  a {
+    text-decoration: none;
+    color: black;
+  }
 `;
 
 function App() {
@@ -35,7 +40,6 @@ function App() {
   const fullDate = year + month + date;
   /** 데일리 데이터 받아오기 */
   const GetDailyData = useCallback(() => {
-    console.log(dailyData);
     axios
       .get(`${BuildProxy}/Kobis/movie/daily?targetDt=${fullDate}`)
       .then((res) => {
@@ -53,10 +57,8 @@ function App() {
   useEffect(() => {
     let value = JSON.parse(window.localStorage.getItem("dailyData" + fullDate));
     if (!value) {
-      console.log(1);
       GetDailyData();
     } else {
-      console.log(value);
       setDailyData(value);
     }
     return () => {
@@ -108,7 +110,7 @@ function App() {
             element={
               <>
                 <Navbar page="movie-info"></Navbar>
-                <Homepage></Homepage>
+                <MovieInfo></MovieInfo>
               </>
             }
           />

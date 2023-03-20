@@ -5,6 +5,7 @@ import { BsSearch } from "react-icons/bs";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import axios from "axios";
 import { BuildProxy } from "../buildConfig/proxyConfig";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -14,6 +15,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
 `;
+/** 검색 item 컨테이너 */
 const SearchBar = styled.div`
   display: flex;
   justify-content: center;
@@ -22,6 +24,7 @@ const SearchBar = styled.div`
   width: 100%;
   margin-bottom: 20px;
 `;
+/** 검색 내용 입력 */
 const SearchInput = styled.input`
   display: flex;
   font-size: 30px;
@@ -32,6 +35,7 @@ const SearchInput = styled.input`
   box-sizing: border-box;
   border: 1px solid black;
 `;
+/** 검색 submit 버튼 */
 const SearchButton = styled.div`
   cursor: pointer;
   user-select: none;
@@ -50,6 +54,7 @@ const SearchButton = styled.div`
     scale: 0.98;
   }
 `;
+/** 검색 데이터 송출 콘테이너 */
 const SearchDataContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -61,6 +66,7 @@ const SearchDataContainer = styled.div`
   border-radius: 10px;
   overflow-y: scroll;
 `;
+/** 검색 데이터 형식 */
 const SearchInfoItem = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -76,6 +82,7 @@ const SearchInfoItem = styled.div`
   position: sticky;
   top: 0;
 `;
+/** 검색 데이터 item */
 const SearchDataItem = styled.div`
   cursor: pointer;
   display: flex;
@@ -90,6 +97,7 @@ const SearchDataItem = styled.div`
     return props.bgColor === undefined ? "white" : "#" + props.bgColor;
   }};
 `;
+/** 검색 데이터 제목 */
 const SearchDataTitle = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -107,6 +115,7 @@ const SearchDataTitle = styled.div`
   overflow: hidden;
   font-family: "CM";
 `;
+/** 검색 데이터 방영일 */
 const SearchDataDate = styled.div`
   display: flex;
   justify-content: center;
@@ -121,6 +130,7 @@ const SearchDataDate = styled.div`
   border-right: 1px solid black;
   font-family: "CM";
 `;
+/** 검색 데이터 장르 */
 const SearchDataGenre = styled.div`
   display: flex;
   justify-content: center;
@@ -134,6 +144,7 @@ const SearchDataGenre = styled.div`
   border-bottom: 1px solid black;
   font-family: "CM";
 `;
+/** 검색 데이터의 내용이 없음 혹은 검색을 진행하지 않았을 경우 나오는 페이지 */
 const NoData = styled.div`
   display: flex;
   flex-direction: column;
@@ -146,6 +157,7 @@ const NoData = styled.div`
   color: #ff6464;
   font-family: "CM";
 `;
+/** No data시에 나오는 로딩 이미지 */
 const LoadingIcon = styled.div`
   display: flex;
   justify-content: center;
@@ -251,6 +263,13 @@ function SearchPage() {
               <AiOutlineLoading3Quarters />
             </LoadingIcon>
             Data Empty
+          </NoData>
+        ) : searchData.length === 0 ? (
+          <NoData>
+            <LoadingIcon>
+              <AiOutlineLoading3Quarters />
+            </LoadingIcon>
+            No Match Data
           </NoData>
         ) : (
           <>{SearchItemGen()}</>

@@ -1,1 +1,1 @@
-export const BuildProxy = "https://movie-api-server.herokuapp.com";
+export const BuildProxy = "/HerokuApi";
