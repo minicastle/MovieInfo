@@ -6,6 +6,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import axios from "axios";
 import { BuildProxy } from "../buildConfig/proxyConfig";
 import { Link } from "react-router-dom";
+import { KobisSearch } from "../API/Artifact/KobisAPI";
 
 const Container = styled.div`
   display: flex;
@@ -181,18 +182,29 @@ function SearchPage() {
     for (let i = 0; i < searchData.length; i++) {
       contents.push(
         <SearchDataItem key={`searchDataItem${i}`}>
-          <SearchDataTitle
-            title={searchData[i].movieNm}
-            key={`searchDataTitle${i}`}
+          <Link
+            to={`/MovieInfo/movie-info?movieCd=${searchData[i].movieCd}&title=${searchData[i].movieNm}`}
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+            }}
           >
-            {searchData[i].movieNm}
-          </SearchDataTitle>
-          <SearchDataDate key={`searchDataDate${i}`}>
-            {searchData[i].openDt}
-          </SearchDataDate>
-          <SearchDataGenre key={`searchDataGenre${i}`}>
-            {searchData[i].repGenreNm}
-          </SearchDataGenre>
+            <SearchDataTitle
+              title={searchData[i].movieNm}
+              key={`searchDataTitle${i}`}
+            >
+              {searchData[i].movieNm}
+            </SearchDataTitle>
+            <SearchDataDate key={`searchDataDate${i}`}>
+              {searchData[i].openDt}
+            </SearchDataDate>
+            <SearchDataGenre key={`searchDataGenre${i}`}>
+              {searchData[i].repGenreNm}
+            </SearchDataGenre>
+          </Link>
         </SearchDataItem>
       );
     }
@@ -218,14 +230,10 @@ function SearchPage() {
             if (e.key === "Enter") {
               if (searchContents.length !== 0) {
                 e.target.value = "";
-                axios
-                  .get(
-                    `${BuildProxy}/Kobis/movie/search?movieNm=${searchContents}`
-                  )
-                  .then((res) => {
-                    setSearchData(res.data.movieList);
-                    setSearchContents("");
-                  });
+                KobisSearch(searchContents).then((value) => {
+                  setSearchData(value.movieList);
+                  setSearchContents("");
+                });
               } else {
                 alert("검색어를 입력하세요");
               }
@@ -235,14 +243,10 @@ function SearchPage() {
         <SearchButton
           onClick={() => {
             if (searchContents.length !== 0) {
-              axios
-                .get(
-                  `${BuildProxy}/Kobis/movie/search?movieNm=${searchContents}`
-                )
-                .then((res) => {
-                  setSearchData(res.data.movieList);
-                  setSearchContents("");
-                });
+              KobisSearch(searchContents).then((value) => {
+                setSearchData(value.movieList);
+                setSearchContents("");
+              });
             } else {
               alert("검색어를 입력하세요");
             }

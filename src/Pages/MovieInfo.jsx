@@ -5,6 +5,8 @@ import { BuildProxy } from "../buildConfig/proxyConfig";
 import axios from "axios";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Size40Bold } from "../Components/TextFormat";
+import { KobisInfo } from "../API/Artifact/KobisAPI";
+import { NaverCafe } from "../API/Artifact/NaverAPI";
 
 const Container = styled.div`
   display: flex;
@@ -117,16 +119,12 @@ function MovieInfo() {
       setMovieList(window.localStorage.getItem("movieList"));
     } else {
       setMode("info");
-      axios
-        .get(`${BuildProxy}/kobis/movie/info?movieCd=${params[1]}`)
-        .then((res) => {
-          setMovieInfo(res.data);
-        });
-      axios
-        .get(`${BuildProxy}/Naver/movie/cafe?title=${params[3]}`)
-        .then((res) => {
-          setMovieCafe(res.data);
-        });
+      KobisInfo(params[1]).then((value) => {
+        setMovieInfo(value);
+      });
+      NaverCafe(params[3]).then((value) => {
+        setMovieCafe(value);
+      });
     }
   }, []);
   return (

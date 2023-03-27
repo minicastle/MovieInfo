@@ -4,11 +4,10 @@ import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import Homepage from "./Pages/HomePage";
 import Navbar from "./Components/NavBar";
 import DailyPage from "./Pages/DailyPage";
-import axios, { Axios } from "axios";
 import SearchPage from "./Pages/SearchPage";
 import "./Components/FontFormat.css";
-import { BuildProxy } from "./buildConfig/proxyConfig";
 import MovieInfo from "./Pages/MovieInfo";
+import { KobisDaily } from "./API/Artifact/KobisAPI";
 
 const Container = styled.div`
   display: flex;
@@ -38,31 +37,31 @@ function App() {
       ? String(yesterDay.getDate())
       : "0" + yesterDay.getDate();
   const fullDate = year + month + date;
-  /** 데일리 데이터 받아오기 */
-  const GetDailyData = useCallback(() => {
-    axios
-      .get(`${BuildProxy}/Kobis/movie/daily?targetDt=${fullDate}`)
-      .then((res) => {
-        setDailyData(res.data);
-        window.localStorage.setItem(
-          "dailyData" + fullDate,
-          JSON.stringify(res.data)
-        );
-      })
-      .catch((error) => {
-        setDailyData(error);
-      });
-  }, []);
-
+  const handleStorage = useCallback(() => {
+    if (dailyData !== undefined) {
+      window.localStorage.setItem(
+        "dailyData" + fullDate,
+        JSON.stringify(dailyData)
+      );
+    }
+  }, [dailyData]);
   useEffect(() => {
+    const handleTabClose = (event) => {
+      event.preventDefault();
+      handleStorage();
+      return (event.returnValue = "Are you sure you want to exit?");
+    };
+    window.addEventListener("beforeunload", handleTabClose);
     let value = JSON.parse(window.localStorage.getItem("dailyData" + fullDate));
     if (!value) {
-      GetDailyData();
+      KobisDaily(fullDate).then((res) => {
+        setDailyData(res);
+      });
     } else {
       setDailyData(value);
     }
     return () => {
-      setDailyData();
+      window.removeEventListener("beforeunload", handleTabClose);
     };
   }, []);
   return (
