@@ -126,6 +126,7 @@ const SearchDataDate = styled.div`
   }};
   width: 15%;
   height: 100%;
+  min-width: 125px;
   box-sizing: border-box;
   border-bottom: 1px solid black;
   border-right: 1px solid black;

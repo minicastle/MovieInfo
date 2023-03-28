@@ -19,6 +19,14 @@ export const Size40Bold = styled.div`
   font-size: 40px;
   font-weight: bold;
 `;
+export const Size40BoldWrap = styled.div`
+  color: ${(props) => {
+    return props.color !== undefined ? "#" + props.color : "black";
+  }};
+  word-break: keep-all;
+  font-size: 40px;
+  font-weight: bold;
+`;
 
 export const Size30Bold = styled.div`
   color: ${(props) => {
@@ -41,4 +49,11 @@ export const Size20 = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+export const Size20Wrap = styled.div`
+  color: ${(props) => {
+    return props.color !== undefined ? "#" + props.color : "black";
+  }};
+  word-break: keep-all;
+  font-size: 20px;
 `;
