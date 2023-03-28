@@ -12,7 +12,10 @@ export const NaverPoster = async (movieNm) => {
       headers: NaverOption,
     })
     .then((value) => {
-      return value.data.items[0].link;
+      return String(value.data.items[0].thumbnail).replace(
+        "type=b150",
+        "type=b400"
+      );
     });
 
   return value;

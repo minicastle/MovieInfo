@@ -1,12 +1,10 @@
-import React, { createElement, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Link, useLocation } from "react-router-dom";
-import { BuildProxy } from "../buildConfig/proxyConfig";
-import axios from "axios";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Size40Bold } from "../Components/TextFormat";
 import { KobisInfo } from "../API/Artifact/KobisAPI";
 import { NaverCafe } from "../API/Artifact/NaverAPI";
+import Loading from "../Components/Loading";
 
 const Container = styled.div`
   display: flex;
@@ -15,35 +13,6 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-`;
-/** 데이터를 불러오고 있을시 나오는 페이지 */
-const NoData = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  font-size: 50px;
-  font-weight: bold;
-  color: #ff6464;
-  font-family: "CM";
-`;
-/** 데이터를 불러오고 있을시 나오는 페이지 로딩 이미지 */
-const LoadingIcon = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 100px;
-  animation: LoadingRotate 2s linear infinite;
-  @keyframes LoadingRotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(365deg);
-    }
-  }
 `;
 /** 영화정보 확인 콘테이너 */
 const MovieInfoContainer = styled.div`
@@ -132,12 +101,7 @@ function MovieInfo() {
       {mode === "list" ? (
         <></>
       ) : movieInfo === undefined || movieCafe === undefined ? (
-        <NoData>
-          <LoadingIcon>
-            <AiOutlineLoading3Quarters />
-          </LoadingIcon>
-          Loading Now! Please Wait~~ q(≧▽≦q)
-        </NoData>
+        <Loading></Loading>
       ) : (
         <MovieInfoContainer>
           <MovieInfoCafe>

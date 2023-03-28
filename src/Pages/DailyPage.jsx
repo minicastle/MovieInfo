@@ -5,6 +5,7 @@ import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { BsFillPauseFill, BsFillPlayFill, BsDash } from "react-icons/bs";
 import { RxDoubleArrowDown, RxDoubleArrowUp } from "react-icons/rx";
 import Carousel from "../Components/Carousel";
+import Loading from "../Components/Loading";
 
 const Container = styled.div`
   display: flex;
@@ -13,33 +14,6 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   gap: 30px;
-`;
-/** error 방지용 Loading data */
-const LoadingData = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-const LoadingLogo = styled.img`
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  animation: rotateImg 2.5s ease-in-out infinite;
-  @keyframes rotateImg {
-    from {
-      transform: rotateZ(0deg);
-    }
-    to {
-      transform: rotateZ(360deg);
-    }
-  }
-`;
-const LoadingText = styled.div`
-  background-color: #ea8fea;
-  color: white;
-  font-size: 30px;
-  font-weight: bold;
 `;
 /** 메인 콘텐츠 콘테이너 1 */
 const Main1 = styled.div`
@@ -265,11 +239,7 @@ function DailyPage({ dailyData }) {
     <>
       {dailyData === undefined ? (
         <Container>
-          <LoadingData>
-            <LoadingLogo src="./loading.png" alt=""></LoadingLogo>
-            <LoadingText>Loading Data!</LoadingText>
-            <LoadingText>Wait a moment q(≧▽≦q)</LoadingText>
-          </LoadingData>
+          <Loading></Loading>
         </Container>
       ) : (
         <Container>
