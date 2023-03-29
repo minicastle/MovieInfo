@@ -6,6 +6,7 @@ import { BsFillPauseFill, BsFillPlayFill, BsDash } from "react-icons/bs";
 import { RxDoubleArrowDown, RxDoubleArrowUp } from "react-icons/rx";
 import Carousel from "../Components/Carousel";
 import Loading from "../Components/Loading";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -181,40 +182,47 @@ function DailyPage({ dailyData }) {
       let contents = [];
       for (let i = 0; i < e.length; i++) {
         contents.push(
-          <RankItem
-            key={`RankItem${i}`}
-            bgColor={movieNumber === i + 1 ? "F7F5EB" : "ffffff"}
+          <Link
+            to={`/MovieInfo/movie-info?movieCd=${e[i].movieCd}&title=${e[i].movieNm}`}
+            key={"RankItemLinkInfo" + i}
           >
-            <RankNumber key={`RankItemNumber${i}`}>
-              <Size20 key={`RankItemNumberText${i}`}>{e[i].rank}</Size20>
-            </RankNumber>
-            <RankTitle title={e[i].movieNm} key={`RankItemTitle${i}`}>
-              <Size20 key={`RankItemTitleText${i}`}>{e[i].movieNm}</Size20>
-            </RankTitle>
-            <RankInten key={`RankItemInten${i}`}>
-              <Size20 key={`RankItemIntenText${i}`}>
-                {Number(e[i].rankInten) < 0 ? (
-                  <>
-                    <RxDoubleArrowDown color="332FD0" />
-                    {Number(e[i].rankInten) * -1}
-                  </>
-                ) : Number(e[i].rankInten) === 0 ? (
-                  <BsDash color="379237" fontSize={"30px"} />
-                ) : (
-                  <>
-                    <RxDoubleArrowUp color="E90064" />
-                    {e[i].rankInten}
-                  </>
-                )}
-              </Size20>
-            </RankInten>
-            <RankViewer key={`RankItemViewer${i}`}>
-              <Size20 key={`RankItemViewerText${i}`}>{e[i].audiAcc}</Size20>
-            </RankViewer>
-            <RankNew key={`RankItemNew${i}`}>
-              <Size20 key={`RankItemNewText${i}`}>{e[i].rankOldAndNew}</Size20>
-            </RankNew>
-          </RankItem>
+            <RankItem
+              key={`RankItem${i}`}
+              bgColor={movieNumber === i + 1 ? "F7F5EB" : "ffffff"}
+            >
+              <RankNumber key={`RankItemNumber${i}`}>
+                <Size20 key={`RankItemNumberText${i}`}>{e[i].rank}</Size20>
+              </RankNumber>
+              <RankTitle title={e[i].movieNm} key={`RankItemTitle${i}`}>
+                <Size20 key={`RankItemTitleText${i}`}>{e[i].movieNm}</Size20>
+              </RankTitle>
+              <RankInten key={`RankItemInten${i}`}>
+                <Size20 key={`RankItemIntenText${i}`}>
+                  {Number(e[i].rankInten) < 0 ? (
+                    <>
+                      <RxDoubleArrowDown color="332FD0" />
+                      {Number(e[i].rankInten) * -1}
+                    </>
+                  ) : Number(e[i].rankInten) === 0 ? (
+                    <BsDash color="379237" fontSize={"30px"} />
+                  ) : (
+                    <>
+                      <RxDoubleArrowUp color="E90064" />
+                      {e[i].rankInten}
+                    </>
+                  )}
+                </Size20>
+              </RankInten>
+              <RankViewer key={`RankItemViewer${i}`}>
+                <Size20 key={`RankItemViewerText${i}`}>{e[i].audiAcc}</Size20>
+              </RankViewer>
+              <RankNew key={`RankItemNew${i}`}>
+                <Size20 key={`RankItemNewText${i}`}>
+                  {e[i].rankOldAndNew}
+                </Size20>
+              </RankNew>
+            </RankItem>
+          </Link>
         );
       }
       return contents;

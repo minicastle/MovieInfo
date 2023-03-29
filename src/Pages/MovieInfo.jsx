@@ -1,15 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Link, useLocation } from "react-router-dom";
-import {
-  Size20,
-  Size20Wrap,
-  Size30Bold,
-  Size40Bold,
-} from "../Components/TextFormat";
+import { Size20, Size20Wrap, Size40Bold } from "../Components/TextFormat";
 import { KobisInfo } from "../API/Artifact/KobisAPI";
 import { NaverCafe, NaverPoster } from "../API/Artifact/NaverAPI";
 import Loading from "../Components/Loading";
+import { SiNaver } from "react-icons/si";
+import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 
 const Container = styled.div`
   display: flex;
@@ -18,6 +15,103 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+`;
+/** 영화 북마크 콘테이너 */
+const MovieBookMarkContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 50%;
+  height: 70vh;
+  background-color: #f9f5eb;
+  border-radius: 20px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: gray;
+    border-radius: 10px;
+  }
+`;
+/** 북마크 리스트 header */
+const MovieBookMarkHeader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  color: black;
+  font-size: 40px;
+  font-weight: bold;
+  font-family: "CM";
+  background-color: #e4dccf;
+  border-radius: 20px 0 0 0;
+`;
+/** 북마크 콘텐츠 */
+const MovieMarks = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid black;
+  box-sizing: border-box;
+  :hover {
+    border: 1px solid black;
+    border-bottom: 2px solid black;
+  }
+`;
+/** 북마크 제목 */
+const MovieMarkTitle = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 90%;
+  max-width: 90%;
+  font-size: 25px;
+  font-family: "CM";
+  padding-left: 20px;
+  white-space: nowrap;
+  box-sizing: border-box;
+`;
+/** 북마크 표시 */
+const MovieMarkCheck = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+  font-size: 50px;
+`;
+/** 북마크 추가용 Item */
+const AddBookMark = styled.div`
+  transition: 200ms ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  font-size: 35px;
+  color: #2192ff;
+  animation: colorTransform 5s ease-in-out infinite;
+  @keyframes colorTransform {
+    0% {
+      color: #2192ff;
+    }
+    50% {
+      color: #ff85b3;
+    }
+    100% {
+      color: #2192ff;
+    }
+  }
+  :hover {
+    scale: 1.01;
+  }
 `;
 /** 영화정보 확인 콘테이너 */
 const MovieInfoContainer = styled.div`
@@ -29,16 +123,27 @@ const MovieInfoContainer = styled.div`
   height: 95vh;
   background-color: white;
   overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: gray;
+    border-radius: 10px;
+  }
 `;
 /** 영화 설명 콘테이너 */
 const MovieInformatin = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: 70%;
+  max-width: 900px;
   height: fit-content;
   margin: 20px 0 40px;
-  gap: 30px;
   border: 1px solid black;
   border-radius: 5px;
 `;
@@ -46,12 +151,11 @@ const MovieInformatin = styled.div`
 const MovieInformationPoster = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  border-right: 1px solid black;
-  padding: 5px;
-  max-width: 400px;
+  align-items: flex-start;
+  width: 400px;
   height: 100%;
   overflow: hidden;
+  margin: 10px;
 `;
 /** 영화 정보 콘테이너 */
 const MovieInformationTexts = styled.div`
@@ -97,7 +201,7 @@ const MovieInfoCafe = styled.div`
   width: 70%;
   border: 1px solid black;
   box-shadow: 2px 4px 8px #aaaaaa;
-  max-width: 690px;
+  max-width: 900px;
 `;
 /** 영화 카페글 */
 const MovieInfoCafeItem = styled.div`
@@ -112,6 +216,48 @@ const MovieInfoCafeItem = styled.div`
   box-sizing: border-box;
   white-space: nowrap;
   overflow: hidden;
+  :hover {
+    border: 1px solid black;
+    border-bottom: 2px solid black;
+  }
+`;
+/** 영화 정보 사이트 링크들 */
+const MovieInfoSites = styled.div`
+  transition: 300ms ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: fit-content;
+  padding: 20px 10px;
+  gap: 30px;
+  border: 2px solid black;
+  border-radius: 10px;
+  position: fixed;
+  top: 50px;
+  right: 70px;
+`;
+/** 영화 정보 사이트 링크 버튼 */
+const MovieInfoSiteButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  max-height: 50px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 40px;
+  height: fit-content;
+  background-color: ${(props) => {
+    return props.bgColor !== undefined ? "#" + props.bgColor : "";
+  }};
+  color: ${(props) => {
+    return props.color !== undefined ? "#" + props.color : "black";
+  }};
+  :active {
+    scale: 0.98;
+  }
 `;
 function MovieInfo() {
   const [mode, setMode] = useState("list");
@@ -155,6 +301,18 @@ function MovieInfo() {
     return buf.join(",");
   }, []);
   const handleActor = useCallback((actor) => {
+    if (actor.length === 0) return "정보없음";
+    let buf = [];
+    for (let i = 0; i < actor.length; i++) {
+      buf.push(actor[i].peopleNm);
+      if (i === 12) {
+        buf.push("...");
+        break;
+      }
+    }
+    return buf.join(", ");
+  }, []);
+  const handleActorTitle = useCallback((actor) => {
     if (actor.length === 0) return "정보없음";
     let buf = [];
     for (let i = 0; i < actor.length; i++) {
@@ -207,12 +365,120 @@ function MovieInfo() {
           }
         />
       );
-  });
+  }, []);
+  const handleBookMark = useCallback(
+    (paramsCd, paramsNm) => {
+      let Marked = false;
+      if (movieList?.length !== 0) {
+        for (let i = 0; i < movieList?.length; i++) {
+          if (movieList[i].movieCd === paramsCd) {
+            Marked = true;
+            break;
+          }
+        }
+      }
+      return Marked ? (
+        <AiFillStar
+          color="FFEA20"
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            handleRemoveStorage(paramsCd);
+          }}
+        />
+      ) : (
+        <AiOutlineStar
+          color="8DCBE6"
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            handleAddStorage(paramsCd, paramsNm);
+          }}
+        />
+      );
+    },
+    [movieList]
+  );
+  const handleAddStorage = useCallback(
+    (paramsCd, paramsNm) => {
+      setMovieList((movieList) => {
+        return [...movieList, { movieCd: paramsCd, movieNm: paramsNm }];
+      });
+    },
+    [movieList]
+  );
+  const handleRemoveStorage = useCallback(
+    (paramsCd) => {
+      let origin = movieList;
+      let buf = [];
+      for (let i = 0; i < origin.length; i++) {
+        if (origin[i].movieCd === paramsCd) {
+          buf = [origin.slice(0, i), origin.slice(i + 1)].flat();
+          break;
+        }
+      }
+      setMovieList(buf);
+    },
+    [movieList]
+  );
+  const MovieListGen = useCallback(() => {
+    if (movieList?.length === 0) {
+      return (
+        <Link
+          to={"/MovieInfo/search"}
+          key={"add bookmark Link"}
+          style={{
+            height: "90%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <AddBookMark key={"add bookmark button"}>
+            Click Here To Add More Movies!
+          </AddBookMark>
+        </Link>
+      );
+    }
+    let contents = [];
+    for (let i = 0; i < movieList?.length; i++) {
+      contents.push(
+        <MovieMarks key={"movie marks" + i}>
+          <Link
+            to={`/MovieInfo/movie-info?movieCd=${movieList[i].movieCd}&title=${movieList[i].movieNm}`}
+            key={"Link Item" + i}
+            style={{ width: "90%", overflow: "hidden" }}
+          >
+            <MovieMarkTitle
+              title={decodeURI(movieList[i].movieNm)}
+              key={"mark title" + i}
+            >
+              {decodeURI(movieList[i].movieNm)}
+            </MovieMarkTitle>
+          </Link>
+          <MovieMarkCheck key={"mark check" + i}>
+            {handleBookMark(movieList[i].movieCd, movieList[i].movieNm)}
+          </MovieMarkCheck>
+        </MovieMarks>
+      );
+    }
+    contents.push(
+      <Link to={"/MovieInfo/search"} key={"add bookmark Link"}>
+        <AddBookMark key={"add bookmark button"}>
+          Click Here To Add More Movies!
+        </AddBookMark>
+      </Link>
+    );
+    return contents;
+  }, [movieList]);
   useEffect(() => {
-    if (params.length === 1) {
-      setMode("list");
-      setMovieList(window.localStorage.getItem("movieList"));
-    } else {
+    if (movieList === undefined) {
+      setMovieList(JSON.parse(window.localStorage.getItem("movieList")));
+    }
+    if (
+      params.length !== 1 &&
+      movieInfo === undefined &&
+      movieCafe === undefined &&
+      moviePoster === undefined
+    ) {
       setMode("info");
       KobisInfo(params[1]).then((value) => {
         setMovieInfo(value);
@@ -224,11 +490,17 @@ function MovieInfo() {
         setMoviePoster(vlaue);
       });
     }
-  }, []);
+    if (movieList !== undefined) {
+      window.localStorage.setItem("movieList", JSON.stringify(movieList));
+    }
+  }, [movieList, params]);
   return (
-    <Container>
+    <Container onScroll={() => {}}>
       {mode === "list" ? (
-        <></>
+        <MovieBookMarkContainer>
+          <MovieBookMarkHeader>BOOK MARKS</MovieBookMarkHeader>
+          {MovieListGen()}
+        </MovieBookMarkContainer>
       ) : movieInfo === undefined || movieCafe === undefined ? (
         <Loading></Loading>
       ) : (
@@ -248,7 +520,7 @@ function MovieInfo() {
                 장르: {handleGenre(movieInfo.genres)}
               </Size20Wrap>
               <Size20>감독 : {movieInfo.directors[0]?.peopleNm}</Size20>
-              <Size20Wrap>
+              <Size20Wrap title={handleActorTitle(movieInfo?.actors)}>
                 출연 배우 : {handleActor(movieInfo?.actors)}
               </Size20Wrap>
               <MovieCompanys>
@@ -272,7 +544,78 @@ function MovieInfo() {
               Naver Cafe
             </Size40Bold>
           </MovieInfoCafe>
-          <MovieInfoCafe>{CafeItemGen()}</MovieInfoCafe>
+          <MovieInfoCafe style={{ marginBottom: "20px" }}>
+            {CafeItemGen()}
+          </MovieInfoCafe>
+          <MovieInfoSites>
+            <MovieInfoSiteButton bgColor="2db400" color="ffffff">
+              <Link
+                style={{
+                  color: "white",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                to={`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${params[3]}`}
+                target="_blank"
+              >
+                <SiNaver />
+              </Link>
+            </MovieInfoSiteButton>
+            <MovieInfoSiteButton>
+              <Link
+                style={{
+                  color: "white",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                to={`https://namu.wiki/w/${params[3]}`}
+                target="_blank"
+              >
+                <img
+                  src="https://jwiki.kr/wiki/images/thumb/d/d5/%EB%82%98%EB%AC%B4%EC%9C%84%ED%82%A4_%EC%95%84%EC%9D%B4%EC%BD%98.png/200px-%EB%82%98%EB%AC%B4%EC%9C%84%ED%82%A4_%EC%95%84%EC%9D%B4%EC%BD%98.png"
+                  alt=""
+                  style={{ width: "55px" }}
+                />
+              </Link>
+            </MovieInfoSiteButton>
+            <MovieInfoSiteButton>
+              <Link
+                style={{
+                  color: "white",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                to={`https://movie.daum.net/search?q=${params[3]}#tab=all`}
+                target="_blank"
+              >
+                <img
+                  src="https://t1.daumcdn.net/liveboard/profile/daum_notice.png"
+                  alt=""
+                  style={{ width: "70px" }}
+                />
+              </Link>
+            </MovieInfoSiteButton>
+            <MovieInfoSiteButton>
+              <Link
+                style={{
+                  color: "white",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                to={`https://www.google.com/search?q=${params[3]}`}
+                target="_blank"
+              >
+                <img
+                  src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+                  alt=""
+                  style={{ width: "80px" }}
+                />
+              </Link>
+            </MovieInfoSiteButton>
+            <MovieInfoSiteButton>
+              {handleBookMark(params[1], params[3])}
+            </MovieInfoSiteButton>
+          </MovieInfoSites>
         </MovieInfoContainer>
       )}
     </Container>

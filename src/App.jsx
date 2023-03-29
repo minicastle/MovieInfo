@@ -8,6 +8,9 @@ import SearchPage from "./Pages/SearchPage";
 import "./Components/FontFormat.css";
 import MovieInfo from "./Pages/MovieInfo";
 import { KobisDaily } from "./API/Artifact/KobisAPI";
+import UpdatePage from "./Pages/UpdatePage";
+import QuestionPage from "./Pages/QuestionPage";
+import SiteInfoPage from "./Pages/SiteInfoPage";
 
 const Container = styled.div`
   display: flex;
@@ -53,6 +56,10 @@ function App() {
     };
     window.addEventListener("beforeunload", handleTabClose);
     let value = JSON.parse(window.localStorage.getItem("dailyData" + fullDate));
+    let ListUp = window.localStorage.getItem("movieList");
+    if (!ListUp || ListUp === "undefined") {
+      window.localStorage.setItem("movieList", JSON.stringify([]));
+    }
     if (!value) {
       KobisDaily(fullDate).then((res) => {
         setDailyData(res);
@@ -100,7 +107,7 @@ function App() {
             element={
               <>
                 <Navbar page="update"></Navbar>
-                <Homepage></Homepage>
+                <UpdatePage></UpdatePage>
               </>
             }
           />
@@ -118,7 +125,7 @@ function App() {
             element={
               <>
                 <Navbar page="question"></Navbar>
-                <Homepage></Homepage>
+                <QuestionPage></QuestionPage>
               </>
             }
           />
@@ -127,7 +134,7 @@ function App() {
             element={
               <>
                 <Navbar page="site-info"></Navbar>
-                <Homepage></Homepage>
+                <SiteInfoPage></SiteInfoPage>
               </>
             }
           />

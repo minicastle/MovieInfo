@@ -66,6 +66,17 @@ const SearchDataContainer = styled.div`
   background-color: white;
   border-radius: 10px;
   overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: gray;
+    border-radius: 5px;
+  }
 `;
 /** 검색 데이터 형식 */
 const SearchInfoItem = styled.div`
