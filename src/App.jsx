@@ -40,37 +40,29 @@ function App() {
       ? String(yesterDay.getDate())
       : "0" + yesterDay.getDate();
   const fullDate = year + month + date;
-  const handleStorage = useCallback(() => {
-    if (dailyData !== undefined) {
+  useEffect(() => {
+    if (dailyData == undefined) {
+      let value = window.localStorage.getItem("dailyData" + fullDate);
+      let ListUp = window.localStorage.getItem("movieList");
+      if (!ListUp || ListUp === "undefined") {
+        window.localStorage.setItem("movieList", JSON.stringify([]));
+      }
+      if (!value || value === "undefined") {
+        KobisDaily(fullDate).then((res) => {
+          setDailyData(res);
+        });
+      } else {
+        setDailyData(value);
+      }
+    }
+    setTimeout(() => {
       window.localStorage.setItem(
         "dailyData" + fullDate,
         JSON.stringify(dailyData)
       );
-    }
+    }, 7000);
+    return () => {};
   }, [dailyData]);
-  useEffect(() => {
-    const handleTabClose = (event) => {
-      event.preventDefault();
-      handleStorage();
-      return (event.returnValue = "Are you sure you want to exit?");
-    };
-    window.addEventListener("beforeunload", handleTabClose);
-    let value = JSON.parse(window.localStorage.getItem("dailyData" + fullDate));
-    let ListUp = window.localStorage.getItem("movieList");
-    if (!ListUp || ListUp === "undefined") {
-      window.localStorage.setItem("movieList", JSON.stringify([]));
-    }
-    if (!value) {
-      KobisDaily(fullDate).then((res) => {
-        setDailyData(res);
-      });
-    } else {
-      setDailyData(value);
-    }
-    return () => {
-      window.removeEventListener("beforeunload", handleTabClose);
-    };
-  }, []);
   return (
     <Container>
       <BrowserRouter>
