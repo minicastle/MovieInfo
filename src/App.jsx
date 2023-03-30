@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Homepage from "./Pages/HomePage";
 import Navbar from "./Components/NavBar";
 import DailyPage from "./Pages/DailyPage";
 import SearchPage from "./Pages/SearchPage";
@@ -55,12 +54,12 @@ function App() {
         setDailyData(value);
       }
     }
-    setTimeout(() => {
-      window.localStorage.setItem(
-        "dailyData" + fullDate,
-        JSON.stringify(dailyData)
-      );
-    }, 7000);
+    // setTimeout(() => {
+    //   window.localStorage.setItem(
+    //     "dailyData" + fullDate,
+    //     JSON.stringify(dailyData)
+    //   );
+    // }, 7000);
     return () => {};
   }, [dailyData]);
   return (
@@ -72,7 +71,7 @@ function App() {
             element={
               <>
                 <Navbar page="home"></Navbar>
-                <Homepage></Homepage>
+                <SiteInfoPage></SiteInfoPage>
               </>
             }
           />

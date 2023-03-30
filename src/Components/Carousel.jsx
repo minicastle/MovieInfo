@@ -17,13 +17,23 @@ const PosterImages = styled.div`
   justify-content: center;
   align-items: center;
   width: 467px;
+  height: 100%;
   height: fit-content;
+  overflow: hidden;
+  @media screen and (max-width: 795px) {
+    width: 400px;
+  }
 `;
 /** 포스터 이미지 */
 const PosterImage = styled.img`
-  width: 440px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
   background-color: transparent;
+  @media screen and (min-width: 1450px) {
+    width: 440px;
+  }
+  @media screen and (max-width: 1450px) {
+    height: 90%;
+  }
 `;
 
 function Carousel({ dailyData, movieNumber }) {
@@ -39,7 +49,11 @@ function Carousel({ dailyData, movieNumber }) {
     return contents;
   }, []);
   return (
-    <Container position={(movieNumber - 1) * 467}>{PosterGen()}</Container>
+    <Container
+      position={(movieNumber - 1) * (window.innerWidth <= 795 ? 400 : 467)}
+    >
+      {PosterGen()}
+    </Container>
   );
 }
 

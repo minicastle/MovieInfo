@@ -11,6 +11,7 @@ const Container = styled.div`
   align-items: center;
   height: 100%;
   width: 370px;
+  min-width: 300px;
   background-color: #f7c8e0;
   position: relative;
   overflow: hidden;
@@ -130,18 +131,17 @@ function NavBar({ page = "home" }) {
             Q&A
           </NavItem>
         </Link>
-        <Link to="/MovieInfo/site-info">
-          <NavItem color={page === "site-info" ? "B9F3E4" : "FFAACF"}>
-            Site Info
-          </NavItem>
-        </Link>
       </NavList>
       <Footer>
         <FooterIcon>
-          <BsGithub />
+          <Link to={"https://github.com/minicastle"} target="_blank">
+            <BsGithub color="7286d3" />
+          </Link>
         </FooterIcon>
         <FooterIcon>
-          <MdOutlineDeveloperMode />
+          <Link to={"https://github.com/minicastle/MovieInfo"} target="_blank">
+            <MdOutlineDeveloperMode color="7286d3" />
+          </Link>
         </FooterIcon>
         <FooterItem>Made By.MiniCastle</FooterItem>
       </Footer>

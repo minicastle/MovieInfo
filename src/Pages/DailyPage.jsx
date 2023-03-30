@@ -13,8 +13,28 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   gap: 30px;
+  box-sizing: border-box;
+  @media screen and (max-width: 1450px) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 5px;
+  }
+  a {
+    color: white;
+  }
 `;
 /** 메인 콘텐츠 콘테이너 1 */
 const Main1 = styled.div`
@@ -32,13 +52,20 @@ const PosterContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 467px;
-  height: 706px;
+  height: 700px;
   border-radius: 15px;
   background-color: #fefae0;
   padding: 40px 0;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
+  @media screen and (max-width: 1450px) {
+    width: 467px;
+    height: 500px;
+  }
+  @media screen and (max-width: 795px) {
+    width: 400px;
+  }
 `;
 /** 캐러셀 자동 실행 컨트롤 */
 const CarouselAuto = styled.div`
@@ -54,6 +81,9 @@ const PosterControl = styled.div`
   align-items: center;
   gap: 17px;
   margin-top: 10px;
+  @media screen and (max-width: 795px) {
+    gap: 10px;
+  }
 `;
 /** 포스터 네비게이션 Dot */
 const PosterDot = styled.div`
@@ -72,20 +102,29 @@ const Main2 = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
+  @media screen and (max-width: 915px) {
+    width: 500px;
+  }
+  @media screen and (max-width: 820px) {
+    width: 400px;
+  }
 `;
 /** rank 콘텐츠 콘테이너 */
 const RankContents = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
-  height: 860px;
+  height: 868px;
   background-color: white;
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.4);
   border-radius: 15px;
-  padding: 15px 0;
   box-sizing: border-box;
+  @media screen and (max-width: 1450px) {
+    margin-bottom: 50px;
+    height: 560px;
+  }
 `;
 /**rank 콘텐츠 아이템 */
 const RankItem = styled.div`
@@ -101,6 +140,9 @@ const RankItem = styled.div`
   width: 100%;
   box-sizing: border-box;
   cursor: pointer;
+  @media screen and (max-width: 1450px) {
+    height: 50px;
+  }
 `;
 /** rank 아이템 번호 */
 const RankNumber = styled.div`
@@ -108,7 +150,7 @@ const RankNumber = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 78px;
+  width: 10%;
   user-select: none;
 `;
 /** rank 아이템 제목 */
@@ -117,8 +159,11 @@ const RankTitle = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 100%;
-  width: 260px;
+  width: 48%;
   font-weight: 700;
+  @media screen and (max-width: 820px) {
+    width: 75%;
+  }
 `;
 /** rank 아이템 순위변동 */
 const RankInten = styled.div`
@@ -126,8 +171,11 @@ const RankInten = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 80px;
+  width: 12%;
   user-select: none;
+  @media screen and (max-width: 820px) {
+    width: 15%;
+  }
 `;
 /** rank 아이템 누적관객수 */
 const RankViewer = styled.div`
@@ -135,8 +183,11 @@ const RankViewer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 105px;
+  width: 20%;
   user-select: none;
+  @media screen and (max-width: 820px) {
+    display: none;
+  }
 `;
 /** rank 아이템 신규상영영화 */
 const RankNew = styled.div`
@@ -144,8 +195,11 @@ const RankNew = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 75px;
+  width: 10%;
   user-select: none;
+  @media screen and (max-width: 820px) {
+    display: none;
+  }
 `;
 
 function DailyPage({ dailyData }) {
@@ -185,6 +239,7 @@ function DailyPage({ dailyData }) {
           <Link
             to={`/MovieInfo/movie-info?movieCd=${e[i].movieCd}&title=${e[i].movieNm}`}
             key={"RankItemLinkInfo" + i}
+            style={{ width: "100%" }}
           >
             <RankItem
               key={`RankItem${i}`}
@@ -312,8 +367,7 @@ function DailyPage({ dailyData }) {
               <RankItem>
                 <RankNumber
                   style={{
-                    borderRight: "1px solid black",
-                    borderTop: "1px solid black",
+                    justifyContent: "center",
                   }}
                 >
                   <Size20>순위</Size20>
@@ -321,30 +375,36 @@ function DailyPage({ dailyData }) {
                 <RankTitle
                   style={{
                     justifyContent: "center",
-                    borderRight: "1px solid black",
-                    borderTop: "1px solid black",
                   }}
                 >
                   <Size20>영화 제목</Size20>
                 </RankTitle>
-                <RankInten
-                  style={{
-                    borderRight: "1px solid black",
-                    borderTop: "1px solid black",
-                  }}
-                >
-                  <Size20>변동률</Size20>
+                <RankInten>
+                  <Size20
+                    style={{
+                      justifyContent: "center",
+                    }}
+                  >
+                    변동률
+                  </Size20>
                 </RankInten>
-                <RankViewer
-                  style={{
-                    borderRight: "1px solid black",
-                    borderTop: "1px solid black",
-                  }}
-                >
-                  <Size20>누적 관객</Size20>
+                <RankViewer>
+                  <Size20
+                    style={{
+                      justifyContent: "center",
+                    }}
+                  >
+                    누적 관객
+                  </Size20>
                 </RankViewer>
-                <RankNew style={{ borderTop: "1px solid black" }}>
-                  <Size20>신규</Size20>
+                <RankNew>
+                  <Size20
+                    style={{
+                      justifyContent: "center",
+                    }}
+                  >
+                    신규
+                  </Size20>
                 </RankNew>
               </RankItem>
               {RankItemGen(dailyData)}

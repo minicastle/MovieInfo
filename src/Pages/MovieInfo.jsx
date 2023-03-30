@@ -15,6 +15,8 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 `;
 /** 영화 북마크 콘테이너 */
 const MovieBookMarkContainer = styled.div`
@@ -22,21 +24,19 @@ const MovieBookMarkContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 50%;
-  height: 70vh;
+  width: 80%;
+  height: 95vh;
   background-color: #f9f5eb;
-  border-radius: 20px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 10px;
   }
   &::-webkit-scrollbar-thumb {
     background-color: black;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
   }
   &::-webkit-scrollbar-track {
     background-color: gray;
-    border-radius: 10px;
   }
 `;
 /** 북마크 리스트 header */
@@ -50,7 +50,11 @@ const MovieBookMarkHeader = styled.div`
   font-weight: bold;
   font-family: "CM";
   background-color: #e4dccf;
-  border-radius: 20px 0 0 0;
+  position: sticky;
+  top: 0;
+  @media screen and (max-width: 1000px) {
+    font-size: 35px;
+  }
 `;
 /** 북마크 콘텐츠 */
 const MovieMarks = styled.div`
@@ -78,6 +82,9 @@ const MovieMarkTitle = styled.div`
   padding-left: 20px;
   white-space: nowrap;
   box-sizing: border-box;
+  @media screen and (max-width: 1000px) {
+    font-size: 20px;
+  }
 `;
 /** 북마크 표시 */
 const MovieMarkCheck = styled.div`
@@ -111,6 +118,9 @@ const AddBookMark = styled.div`
   }
   :hover {
     scale: 1.01;
+  }
+  @media screen and (max-width: 1000px) {
+    font-size: 20px;
   }
 `;
 /** 영화정보 확인 콘테이너 */
@@ -146,6 +156,10 @@ const MovieInformatin = styled.div`
   margin: 20px 0 40px;
   border: 1px solid black;
   border-radius: 5px;
+  @media screen and (max-width: 1400px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 /** 영화 포스터 콘테이너 */
 const MovieInformationPoster = styled.div`
@@ -156,6 +170,10 @@ const MovieInformationPoster = styled.div`
   height: 100%;
   overflow: hidden;
   margin: 10px;
+  @media screen and (max-width: 1400px) {
+    align-items: center;
+    width: 90%;
+  }
 `;
 /** 영화 정보 콘테이너 */
 const MovieInformationTexts = styled.div`
@@ -236,6 +254,22 @@ const MovieInfoSites = styled.div`
   position: fixed;
   top: 50px;
   right: 70px;
+  box-sizing: border-box;
+  @media screen and (max-width: 1150px) {
+    gap: 20px;
+    right: 35px;
+  }
+  @media screen and (max-width: 930px) {
+    width: 52px;
+    gap: 10px;
+    padding: 0;
+  }
+  @media screen and (max-width: 815px) {
+    right: 24px;
+    width: 40px;
+    gap: 5px;
+    padding: 0;
+  }
 `;
 /** 영화 정보 사이트 링크 버튼 */
 const MovieInfoSiteButton = styled.div`
@@ -257,6 +291,12 @@ const MovieInfoSiteButton = styled.div`
   }};
   :active {
     scale: 0.98;
+  }
+  @media screen and (max-width: 930px) {
+    scale: 0.7;
+  }
+  @media screen and (max-width: 815px) {
+    scale: 0.5;
   }
 `;
 function MovieInfo() {

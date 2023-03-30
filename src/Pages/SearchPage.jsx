@@ -24,6 +24,10 @@ const SearchBar = styled.div`
   height: 70px;
   width: 100%;
   margin-bottom: 20px;
+  font-size: 50px;
+  @media screen and (max-width: 1400px) {
+    font-size: 40px;
+  }
 `;
 /** 검색 내용 입력 */
 const SearchInput = styled.input`
@@ -35,6 +39,10 @@ const SearchInput = styled.input`
   padding: 5px 20px;
   box-sizing: border-box;
   border: 1px solid black;
+  @media screen and (max-width: 1400px) {
+    font-size: 20px;
+    height: 40px;
+  }
 `;
 /** 검색 submit 버튼 */
 const SearchButton = styled.div`
@@ -42,10 +50,11 @@ const SearchButton = styled.div`
   user-select: none;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   box-sizing: border-box;
   height: 46px;
   width: 10%;
+  min-width: 90px;
   background-color: #8ea7e9;
   border-radius: 0px 20px 20px 0px;
   border: 1px solid black;
@@ -53,6 +62,10 @@ const SearchButton = styled.div`
   color: white;
   :active {
     scale: 0.98;
+  }
+  @media screen and (max-width: 1400px) {
+    font-size: 20px;
+    height: 40px;
   }
 `;
 /** 검색 데이터 송출 콘테이너 */
@@ -62,20 +75,12 @@ const SearchDataContainer = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   width: 70%;
-  height: 75%;
+  height: 660px;
   background-color: white;
-  border-radius: 10px;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: black;
-    border-radius: 5px;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: gray;
-    border-radius: 5px;
+  border: 2px solid black;
+  @media screen and (max-width: 900px) {
+    height: 330px;
+    width: 90%;
   }
 `;
 /** 검색 데이터 형식 */
@@ -93,6 +98,13 @@ const SearchInfoItem = styled.div`
   }};
   position: sticky;
   top: 0;
+  @media screen and (max-width: 1400px) {
+    font-size: 20px;
+  }
+  @media screen and (max-width: 900px) {
+    height: 30px;
+    min-height: 30px;
+  }
 `;
 /** 검색 데이터 item */
 const SearchDataItem = styled.div`
@@ -108,6 +120,13 @@ const SearchDataItem = styled.div`
   background-color: ${(props) => {
     return props.bgColor === undefined ? "white" : "#" + props.bgColor;
   }};
+  @media screen and (max-width: 1400px) {
+    font-size: 20px;
+  }
+  @media screen and (max-width: 900px) {
+    height: 30px;
+    min-height: 30px;
+  }
 `;
 /** 검색 데이터 제목 */
 const SearchDataTitle = styled.div`
@@ -153,6 +172,7 @@ const SearchDataGenre = styled.div`
   }};
   width: 25%;
   height: 100%;
+  min-width: 110px;
   box-sizing: border-box;
   border-bottom: 1px solid black;
   font-family: "CM";
@@ -228,10 +248,10 @@ function SearchPage() {
         color="332FD0"
         style={{ textShadow: "2px 4px 4px rgba(0,0,0,0.4)" }}
       >
-        Movie Search
+        Search
       </Size80Bold>
       <SearchBar>
-        <BsSearch fontSize={"50px"} color="7286D3" />
+        <BsSearch color="7286D3" />
         <SearchInput
           placeholder="Movie Title Typing Here"
           value={searchContents}
