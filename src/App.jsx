@@ -121,7 +121,7 @@ function App() {
         <Logo
           src="./MoverLogo.png"
           onClick={() => {
-            window.location.href = "http://localhost:3000";
+            window.location.href = "https://minicastle.github.io/MovieInfo/";
           }}
         />
         {minimize ? (
