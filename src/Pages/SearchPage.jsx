@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import styled from "@emotion/styled";
-import { Size80Bold } from "../Components/TextFormat";
+import { Size80Bold, TitleFont } from "../Components/TextFormat";
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import axios from "axios";
@@ -244,12 +244,12 @@ function SearchPage() {
   }, [searchData]);
   return (
     <Container>
-      <Size80Bold
+      <TitleFont
         color="332FD0"
         style={{ textShadow: "2px 4px 4px rgba(0,0,0,0.4)" }}
       >
         Search
-      </Size80Bold>
+      </TitleFont>
       <SearchBar>
         <BsSearch color="7286D3" />
         <SearchInput

@@ -10,10 +10,11 @@ const NoData = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  font-size: 50px;
+  font-size: 40px;
   font-weight: bold;
   color: #ff6464;
   font-family: "CM";
+  text-align: center;
 `;
 /** 데이터를 불러오고 있을시 나오는 페이지 로딩 이미지 */
 const LoadingIcon = styled.div`

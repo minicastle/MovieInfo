@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { Size20, Size40Bold, Size80Bold } from "../Components/TextFormat";
+import {
+  Size20,
+  Size40Bold,
+  Size80Bold,
+  TitleFont,
+} from "../Components/TextFormat";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { BsFillPauseFill, BsFillPlayFill, BsDash } from "react-icons/bs";
 import { RxDoubleArrowDown, RxDoubleArrowUp } from "react-icons/rx";
@@ -21,6 +26,7 @@ const Container = styled.div`
     justify-content: flex-start;
   }
   overflow-y: scroll;
+  overflow-x: hidden;
   &::-webkit-scrollbar {
     width: 5px;
   }
@@ -307,12 +313,12 @@ function DailyPage({ dailyData }) {
       ) : (
         <Container>
           <Main1>
-            <Size80Bold
+            <TitleFont
               color="332FD0"
               style={{ textShadow: "2px 4px 4px rgba(0,0,0,0.4)" }}
             >
               BOX OFFICE
-            </Size80Bold>
+            </TitleFont>
             <PosterContainer>
               <Carousel dailyData={dailyData} movieNumber={movieNumber} />
               <CarouselAuto>

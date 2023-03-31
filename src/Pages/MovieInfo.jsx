@@ -25,9 +25,16 @@ const MovieBookMarkContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 80%;
-  height: 95vh;
+  height: 90vh;
   background-color: #f9f5eb;
   overflow-y: scroll;
+  box-sizing: border-box;
+  @media screen and (max-width: 950px) {
+    margin-top: 110px;
+  }
+  @media screen and (max-width: 550px) {
+    margin-top: 80px;
+  }
   &::-webkit-scrollbar {
     width: 10px;
   }
@@ -133,6 +140,15 @@ const MovieInfoContainer = styled.div`
   height: 95vh;
   background-color: white;
   overflow-y: scroll;
+  box-sizing: border-box;
+  @media screen and (max-width: 950px) {
+    margin-top: 110px;
+    width: 100%;
+    padding-bottom: 200px;
+  }
+  @media screen and (max-width: 550px) {
+    margin-top: 80px;
+  }
   &::-webkit-scrollbar {
     width: 10px;
   }
@@ -160,6 +176,9 @@ const MovieInformatin = styled.div`
     flex-direction: column;
     align-items: center;
   }
+  @media screen and (max-width: 500px) {
+    width: 75%;
+  }
 `;
 /** 영화 포스터 콘테이너 */
 const MovieInformationPoster = styled.div`
@@ -185,7 +204,6 @@ const MovieInformationTexts = styled.div`
   width: 100%;
   gap: 5px;
   padding: 5px;
-  border-left: 1px solid black;
   box-sizing: border-box;
   position: relative;
 `;
@@ -220,6 +238,9 @@ const MovieInfoCafe = styled.div`
   border: 1px solid black;
   box-shadow: 2px 4px 8px #aaaaaa;
   max-width: 900px;
+  @media screen and (max-width: 500px) {
+    width: 75%;
+  }
 `;
 /** 영화 카페글 */
 const MovieInfoCafeItem = styled.div`
@@ -237,6 +258,9 @@ const MovieInfoCafeItem = styled.div`
   :hover {
     border: 1px solid black;
     border-bottom: 2px solid black;
+  }
+  @media screen and (max-width: 700px) {
+    height: 50px;
   }
 `;
 /** 영화 정보 사이트 링크들 */
@@ -259,15 +283,18 @@ const MovieInfoSites = styled.div`
     gap: 20px;
     right: 35px;
   }
+  @media screen and (max-width: 950px) {
+    top: 160px;
+  }
   @media screen and (max-width: 930px) {
     width: 52px;
     gap: 10px;
     padding: 0;
   }
   @media screen and (max-width: 815px) {
-    right: 24px;
+    right: 15px;
     width: 40px;
-    gap: 5px;
+    gap: 0px;
     padding: 0;
   }
 `;
@@ -559,7 +586,7 @@ function MovieInfo() {
                 개봉일: {movieInfo?.openDt} 상영시간: {movieInfo?.showTm}분
                 장르: {handleGenre(movieInfo.genres)}
               </Size20Wrap>
-              <Size20>감독 : {movieInfo.directors[0]?.peopleNm}</Size20>
+              <Size20Wrap>감독 : {movieInfo.directors[0]?.peopleNm}</Size20Wrap>
               <Size20Wrap title={handleActorTitle(movieInfo?.actors)}>
                 출연 배우 : {handleActor(movieInfo?.actors)}
               </Size20Wrap>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Navbar from "./Components/NavBar";
 import DailyPage from "./Pages/DailyPage";
 import SearchPage from "./Pages/SearchPage";
@@ -10,6 +10,7 @@ import { KobisDaily } from "./API/Artifact/KobisAPI";
 import UpdatePage from "./Pages/UpdatePage";
 import QuestionPage from "./Pages/QuestionPage";
 import SiteInfoPage from "./Pages/SiteInfoPage";
+import { TfiClose, TfiMenu } from "react-icons/tfi";
 
 const Container = styled.div`
   display: flex;
@@ -22,9 +23,57 @@ const Container = styled.div`
     text-decoration: none;
     color: black;
   }
+  position: relative;
+  overflow: hidden;
 `;
-
+/** NavBar최소화 */
+const NavMiniMize = styled.div`
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 70px;
+  width: 100%;
+  height: 110px;
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #7286d3;
+  overflow: hidden;
+  @media screen and (max-width: 950px) {
+    display: flex;
+    position: absolute;
+    top: 0;
+  }
+  @media screen and (max-width: 650px) {
+    font-size: 50px;
+  }
+  @media screen and (max-width: 550px) {
+    height: 80px;
+  }
+  z-index: 100;
+`;
+/**로고 spacer */
+const Spacer = styled.div`
+  width: 70px;
+  @media screen and (max-width: 650px) {
+    width: 50px;
+  }
+`;
+/** 로고 콘테이너 */
+const Logo = styled.img`
+  cursor: pointer;
+  width: 60%;
+  max-width: 400px;
+  transition: 300ms ease-in-out;
+  :hover {
+    scale: 1.02;
+  }
+  :active {
+    scale: 1;
+  }
+`;
 function App() {
+  const [minimize, setMinimize] = useState(true);
   const [dailyData, setDailyData] = useState();
   /** 데일리 데이터 사용 날짜 */
   const now = new Date();
@@ -39,6 +88,9 @@ function App() {
       ? String(yesterDay.getDate())
       : "0" + yesterDay.getDate();
   const fullDate = year + month + date;
+  const handleMinimize = useCallback(() => {
+    setMinimize(!minimize);
+  });
   useEffect(() => {
     if (dailyData == undefined) {
       let value = window.localStorage.getItem("dailyData" + fullDate);
@@ -64,13 +116,39 @@ function App() {
   }, [dailyData]);
   return (
     <Container>
+      <NavMiniMize>
+        <Spacer></Spacer>
+        <Logo
+          src="./MoverLogo.png"
+          onClick={() => {
+            window.location.href = "http://localhost:3000";
+          }}
+        />
+        {minimize ? (
+          <TfiMenu
+            onClick={() => {
+              handleMinimize();
+            }}
+          ></TfiMenu>
+        ) : (
+          <TfiClose
+            onClick={() => {
+              handleMinimize();
+            }}
+          ></TfiClose>
+        )}
+      </NavMiniMize>
       <BrowserRouter>
         <Routes>
           <Route
             path="/MovieInfo/"
             element={
               <>
-                <Navbar page="home"></Navbar>
+                <Navbar
+                  page="home"
+                  minimize={minimize}
+                  handleMinimize={handleMinimize}
+                ></Navbar>
                 <SiteInfoPage></SiteInfoPage>
               </>
             }
@@ -79,7 +157,11 @@ function App() {
             path="/MovieInfo/daily"
             element={
               <>
-                <Navbar page="daily"></Navbar>
+                <Navbar
+                  page="daily"
+                  minimize={minimize}
+                  handleMinimize={handleMinimize}
+                ></Navbar>
                 <DailyPage dailyData={dailyData}></DailyPage>
               </>
             }
@@ -88,7 +170,11 @@ function App() {
             path="/MovieInfo/search"
             element={
               <>
-                <Navbar page="search"></Navbar>
+                <Navbar
+                  page="search"
+                  minimize={minimize}
+                  handleMinimize={handleMinimize}
+                ></Navbar>
                 <SearchPage></SearchPage>
               </>
             }
@@ -97,7 +183,11 @@ function App() {
             path="/MovieInfo/update"
             element={
               <>
-                <Navbar page="update"></Navbar>
+                <Navbar
+                  page="update"
+                  minimize={minimize}
+                  handleMinimize={handleMinimize}
+                ></Navbar>
                 <UpdatePage></UpdatePage>
               </>
             }
@@ -106,7 +196,11 @@ function App() {
             path="/MovieInfo/movie-info"
             element={
               <>
-                <Navbar page="movie-info"></Navbar>
+                <Navbar
+                  page="movie-info"
+                  minimize={minimize}
+                  handleMinimize={handleMinimize}
+                ></Navbar>
                 <MovieInfo></MovieInfo>
               </>
             }
@@ -115,17 +209,12 @@ function App() {
             path="/MovieInfo/question"
             element={
               <>
-                <Navbar page="question"></Navbar>
+                <Navbar
+                  page="question"
+                  minimize={minimize}
+                  handleMinimize={handleMinimize}
+                ></Navbar>
                 <QuestionPage></QuestionPage>
-              </>
-            }
-          />
-          <Route
-            path="/MovieInfo/site-info"
-            element={
-              <>
-                <Navbar page="site-info"></Navbar>
-                <SiteInfoPage></SiteInfoPage>
               </>
             }
           />

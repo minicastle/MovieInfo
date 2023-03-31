@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Size40BoldWrap, Size80Bold } from "../Components/TextFormat";
+import {
+  Size40BoldWrap,
+  Size80Bold,
+  TitleFont,
+} from "../Components/TextFormat";
 import { Link } from "react-router-dom";
 import {
   BsBookmarkStar,
@@ -170,10 +174,10 @@ function SiteInfoPage() {
   return (
     <Container>
       <MainHeaderContainer>
-        <Size80Bold color="0F6292" style={{ width: "100%" }}>
+        <TitleFont color="0F6292" style={{ width: "100%" }}>
           MOVER
           <Size40BoldWrap color="0F6292">For Movie Lovers</Size40BoldWrap>
-        </Size80Bold>
+        </TitleFont>
         <Size80Bold
           color="E384FF"
           style={{

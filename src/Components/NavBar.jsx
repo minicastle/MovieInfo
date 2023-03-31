@@ -5,6 +5,7 @@ import { MdOutlineDeveloperMode } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
+  transition: 300ms ease-in-out;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -19,6 +20,14 @@ const Container = styled.div`
   a {
     text-decoration: none;
   }
+  @media screen and (max-width: 950px) {
+    position: absolute;
+    top: 0;
+    right: ${(props) => {
+      return props.minimize ? "-370px" : "0px";
+    }};
+  }
+  z-index: 99;
 `;
 /** 로고 콘테이너 */
 const Logo = styled.img`
@@ -44,6 +53,9 @@ const Logo = styled.img`
       box-shadow: 0 0 3000px 3000px #7286d3;
     }
   }
+  @media screen and (max-width: 950px) {
+    width: 0;
+  }
 `;
 /** Navbar 아이템 콘테이너 */
 const NavList = styled.ul`
@@ -56,6 +68,10 @@ const NavList = styled.ul`
   padding: 0;
   gap: 30px;
   z-index: 2;
+  @media screen and (max-width: 950px) {
+    margin-top: 150px;
+    gap: 50px;
+  }
 `;
 /**Navbar 아이템 */
 const NavItem = styled.li`
@@ -79,7 +95,7 @@ const Footer = styled.ul`
   justify-content: center;
   align-items: center;
   gap: 20px;
-  position: fixed;
+  position: absolute;
   bottom: 0;
 `;
 /**제작자 소개 형식 */
@@ -99,34 +115,59 @@ const FooterIcon = styled.li`
   }
 `;
 
-function NavBar({ page = "home" }) {
+function NavBar({ page = "home", minimize = true, handleMinimize }) {
   return (
-    <Container>
+    <Container minimize={minimize}>
       <Link to="/MovieInfo/">
         <Logo src="./MoverLogo.png" />
       </Link>
       <NavList>
-        <Link to="/MovieInfo/daily">
+        <Link
+          to="/MovieInfo/daily"
+          onClick={() => {
+            handleMinimize();
+          }}
+        >
           <NavItem color={page === "daily" ? "B9F3E4" : "FFAACF"}>
             Daily
           </NavItem>
         </Link>
-        <Link to="/MovieInfo/search">
+        <Link
+          to="/MovieInfo/search"
+          onClick={() => {
+            handleMinimize();
+          }}
+        >
           <NavItem color={page === "search" ? "B9F3E4" : "FFAACF"}>
             Search
           </NavItem>
         </Link>
-        <Link to="/MovieInfo/update">
+        <Link
+          to="/MovieInfo/update"
+          onClick={() => {
+            handleMinimize();
+          }}
+        >
           <NavItem color={page === "update" ? "B9F3E4" : "FFAACF"}>
             Month Update
           </NavItem>
         </Link>
-        <Link to="/MovieInfo/movie-info">
+        <Link
+          to="/MovieInfo/movie-info"
+          onClick={() => {
+            handleMinimize();
+          }}
+        >
           <NavItem color={page === "movie-info" ? "B9F3E4" : "FFAACF"}>
             Movie Info
           </NavItem>
         </Link>
-        <Link to="/MovieInfo/question">
+        <Link
+          to="/MovieInfo/question"
+          onClick={() => {
+            handleMinimize();
+          }}
+        >
           <NavItem color={page === "question" ? "B9F3E4" : "FFAACF"}>
             Q&A
           </NavItem>
