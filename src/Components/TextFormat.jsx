@@ -28,6 +28,9 @@ export const Size80Bold = styled.div`
   @media screen and (max-width: 620px) {
     font-size: 50px;
   }
+  @media screen and (max-width: 400px) {
+    font-size: 40px;
+  }
 `;
 
 export const Size40Bold = styled.div`
