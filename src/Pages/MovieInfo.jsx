@@ -279,6 +279,7 @@ const MovieInfoSites = styled.div`
   top: 50px;
   right: 70px;
   box-sizing: border-box;
+  background-color: white;
   @media screen and (max-width: 1150px) {
     gap: 20px;
     right: 35px;
