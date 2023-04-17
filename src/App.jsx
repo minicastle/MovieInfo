@@ -48,7 +48,8 @@ const NavMiniMize = styled.div`
     font-size: 50px;
   }
   @media screen and (max-width: 550px) {
-    height: 80px;
+    font-size: 30px;
+    height: 50px;
   }
   z-index: 100;
 `;
@@ -62,14 +63,17 @@ const Spacer = styled.div`
 /** 로고 콘테이너 */
 const Logo = styled.img`
   cursor: pointer;
-  width: 60%;
-  max-width: 400px;
+  width: 300px;
   transition: 300ms ease-in-out;
   :hover {
     scale: 1.02;
   }
   :active {
     scale: 1;
+  }
+  @media screen and (max-width: 550px) {
+    width: 50%;
+    max-width: 200px;
   }
 `;
 function App() {
