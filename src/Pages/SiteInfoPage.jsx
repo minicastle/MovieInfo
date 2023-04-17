@@ -108,7 +108,7 @@ const InfoItem = styled.div`
   border-radius: 20px;
   width: 30%;
   max-width: 400px;
-  min-width: 380px;
+  min-width: 350px;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
   display: flex;
@@ -148,7 +148,7 @@ const CreatorInfoItem = styled.div`
   border-radius: 20px;
   width: 90%;
   max-width: 600px;
-  min-width: 400px;
+  min-width: 350px;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 20px;
