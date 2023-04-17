@@ -15,6 +15,9 @@ export const TitleFont = styled.div`
   @media screen and (max-width: 550px) {
     padding-top: 80px;
   }
+  @media screen and (max-width: 400px) {
+    font-size: 70px;
+  }
 `;
 export const Size80Bold = styled.div`
   user-select: none;
@@ -75,6 +78,9 @@ export const Size20 = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  @media screen and (max-width: 400px) {
+    font-size: 17px;
+  }
 `;
 export const Size20Wrap = styled.div`
   color: ${(props) => {

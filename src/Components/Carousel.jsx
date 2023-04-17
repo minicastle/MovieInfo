@@ -23,6 +23,9 @@ const PosterImages = styled.div`
   @media screen and (max-width: 795px) {
     width: 400px;
   }
+  @media screen and (max-width: 400px) {
+    width: 350px;
+  }
 `;
 /** 포스터 이미지 */
 const PosterImage = styled.img`
@@ -50,7 +53,10 @@ function Carousel({ dailyData, movieNumber }) {
   }, []);
   return (
     <Container
-      position={(movieNumber - 1) * (window.innerWidth <= 795 ? 400 : 467)}
+      position={
+        (movieNumber - 1) *
+        (window.innerWidth > 795 ? 467 : window.innerWidth > 400 ? 400 : 350)
+      }
     >
       {PosterGen()}
     </Container>

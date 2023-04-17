@@ -1,11 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import {
-  Size20,
-  Size40Bold,
-  Size80Bold,
-  TitleFont,
-} from "../Components/TextFormat";
+import { Size20, Size40Bold, TitleFont } from "../Components/TextFormat";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { BsFillPauseFill, BsFillPlayFill, BsDash } from "react-icons/bs";
 import { RxDoubleArrowDown, RxDoubleArrowUp } from "react-icons/rx";
@@ -72,6 +67,9 @@ const PosterContainer = styled.div`
   @media screen and (max-width: 795px) {
     width: 400px;
   }
+  @media screen and (max-width: 400px) {
+    width: 350px;
+  }
 `;
 /** 캐러셀 자동 실행 컨트롤 */
 const CarouselAuto = styled.div`
@@ -90,6 +88,10 @@ const PosterControl = styled.div`
   @media screen and (max-width: 795px) {
     gap: 10px;
   }
+  @media screen and (max-width: 400px) {
+    gap: 8px;
+    width: 350px;
+  }
 `;
 /** 포스터 네비게이션 Dot */
 const PosterDot = styled.div`
@@ -99,6 +101,10 @@ const PosterDot = styled.div`
   background-color: ${(props) => {
     return "#" + props.bgColor;
   }};
+  @media screen and (max-width: 400px) {
+    width: 15px;
+    height: 15px;
+  }
 `;
 /** 메인 콘텐츠 콘테이너 2 */
 const Main2 = styled.div`
@@ -113,6 +119,9 @@ const Main2 = styled.div`
   }
   @media screen and (max-width: 820px) {
     width: 400px;
+  }
+  @media screen and (max-width: 400px) {
+    width: 340px;
   }
 `;
 /** rank 콘텐츠 콘테이너 */
