@@ -96,27 +96,32 @@ function App() {
     setMinimize(!minimize);
   });
   useEffect(() => {
-    if (dailyData == undefined) {
+    if (dailyData === undefined) {
       let value = window.localStorage.getItem("dailyData" + fullDate);
       let ListUp = window.localStorage.getItem("movieList");
-      if (!ListUp || ListUp === "undefined") {
+      if (ListUp === null) {
         window.localStorage.setItem("movieList", JSON.stringify([]));
       }
-      if (!value || value === "undefined") {
+      if (value === null) {
         KobisDaily(fullDate).then((res) => {
           setDailyData(res);
         });
       } else {
-        setDailyData(value);
+        setDailyData(JSON.parse(value));
       }
     }
-    // setTimeout(() => {
-    //   window.localStorage.setItem(
-    //     "dailyData" + fullDate,
-    //     JSON.stringify(dailyData)
-    //   );
-    // }, 7000);
-    return () => {};
+    const dataSet = setInterval(() => {
+      if (dailyData[0].poster !== undefined) {
+        window.localStorage.setItem(
+          "dailyData" + fullDate,
+          JSON.stringify(dailyData)
+        );
+        clearInterval(dataSet);
+      }
+    }, 2000);
+    return () => {
+      clearInterval(dataSet);
+    };
   }, [dailyData]);
   return (
     <Container>

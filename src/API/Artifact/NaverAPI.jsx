@@ -17,7 +17,6 @@ export const NaverPoster = async (movieNm) => {
         "type=b400"
       );
     });
-
   return value;
 };
 
