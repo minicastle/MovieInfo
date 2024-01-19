@@ -256,7 +256,7 @@ const MovieInfoCafeItem = styled.div`
   white-space: nowrap;
   overflow: hidden;
   :hover {
-    border: 1px solid black;
+    border-top: 1px solid black;
     border-bottom: 2px solid black;
   }
   @media screen and (max-width: 700px) {
@@ -402,37 +402,13 @@ function MovieInfo() {
   });
   const handleGrade = useCallback((grade) => {
     if (grade === "전체관람가")
-      return (
-        <GradeImage
-          src={
-            "https://i.namu.wiki/i/fpUOnicfOCodral8obFoPgHEKv8D0AwopM9hf_OYkbKK_zTsVCLkvpgNlxHn0faauC4KnMEwtDZ9FVNEiGubTCR364UPWK6FtS73DnZoCkN-4QtpAVzlO00iHiFUfmQ_j1Vrb891GhY47bcsMOQT2A.svg"
-          }
-        />
-      );
+      return <GradeImage src={"./images/grade/all.png"} />;
     if (grade === "12세이상관람가")
-      return (
-        <GradeImage
-          src={
-            "https://i.namu.wiki/i/Cvav_S8tI-cqZfLsj0UPQjjZmXHbvc9R9mA6_J-MqMphc49Z3MBRaq3vDWX2AT9XqKBs7WSPIdzBSIB_eHZEHkVPUjXAtWpmw8bCK9Y0Du81fdphK1rdXyASvMHlZsCIPMU6sBr_PcGXPlLtEwaLgQ.svg"
-          }
-        />
-      );
+      return <GradeImage src={"./images/grade/12.png"} />;
     if (grade === "15세이상관람가")
-      return (
-        <GradeImage
-          src={
-            "https://i.namu.wiki/i/PFua90aVqFkkR8zGNGV6SiH6NE5KZFxaGCuo86zDTn-IDHoY-JQ0dLPKbCmEdx5Xx7u5MRISCX-36wzqnvogVjbuH8HDM7pAAwxnQ6lxOrDAU5gilgsqbwT2F4bG64HmtxoItoNoX3B9dURM__xTeQ.svg"
-          }
-        />
-      );
+      return <GradeImage src={"./images/grade/15.png"} />;
     if (grade === "청소년관람불가")
-      return (
-        <GradeImage
-          src={
-            "https://i.namu.wiki/i/HOXthrZVGdMv50-grpSa0S-eJRb10jro1QnWoqPeaRsbE0F3gHdIuYqeFkppGffWFHKO92ayes3jLTrua0o1KVFuJQDC0L-YU7o1hZyru1mMlWqMJ_rM0rxSx81MsSMn_k-3FyDXkakC0vg_s8Nujw.svg"
-          }
-        />
-      );
+      return <GradeImage src={"./images/grade/18.png"} />;
   }, []);
   const handleBookMark = useCallback(
     (paramsCd, paramsNm) => {
@@ -575,7 +551,15 @@ function MovieInfo() {
         <MovieInfoContainer>
           <MovieInformatin>
             <MovieInformationPoster>
-              <img src={moviePoster} alt=""></img>
+              <img
+                src={
+                  moviePoster !== "undefined"
+                    ? moviePoster
+                    : "./images/no image.jpg"
+                }
+                alt=""
+                width={260}
+              ></img>
             </MovieInformationPoster>
             <MovieInformationTexts>
               <Size40Bold

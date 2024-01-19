@@ -18,7 +18,7 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100vh;
-  background-color: #b9f3e4;
+  background-color: #d6fff3;
   a {
     text-decoration: none;
     color: black;

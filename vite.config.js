@@ -14,6 +14,11 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/HerokuApi/, ''),
         secure: false,
         ws: true
+      },
+      '/Naver':{
+        target:'https://openapi.naver.com/v1/search/',
+        changeOrigin:true,
+        rewrite:(path)=>path.replace(/^\/Naver/, '')
       }
     }
   }

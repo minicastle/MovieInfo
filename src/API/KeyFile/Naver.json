@@ -1,6 +1,6 @@
 {
-    "posterURL": "https://openapi.naver.com/v1/search/image?display=1",
-    "cafeURL":"https://openapi.naver.com/v1/search/cafearticle.json?&display=10",
+    "posterURL": "/Naver/image?display=1",
+    "cafeURL":"/Naver/cafearticle.json?&display=10",
     "id": "VsMPysJ5MSpS0SUYq2B1",
     "key": "llwlUfosgY"
 }
