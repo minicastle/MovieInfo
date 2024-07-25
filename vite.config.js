@@ -8,13 +8,6 @@ export default defineConfig({
   server:{
     port:3000,
     proxy: {
-      '/HerokuApi': {
-        target: 'https://movie-api-server.herokuapp.com',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/HerokuApi/, ''),
-        secure: false,
-        ws: true
-      },
       '/Naver':{
         target:'https://openapi.naver.com/v1/search/',
         changeOrigin:true,
