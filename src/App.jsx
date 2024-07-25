@@ -150,7 +150,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            path="/MovieInfo/"
+            path="/"
             element={
               <>
                 <Navbar
@@ -163,7 +163,7 @@ function App() {
             }
           />
           <Route
-            path="/MovieInfo/daily"
+            path="/daily"
             element={
               <>
                 <Navbar
@@ -176,7 +176,7 @@ function App() {
             }
           />
           <Route
-            path="/MovieInfo/search"
+            path="/search"
             element={
               <>
                 <Navbar
@@ -189,7 +189,7 @@ function App() {
             }
           />
           <Route
-            path="/MovieInfo/update"
+            path="/update"
             element={
               <>
                 <Navbar
@@ -202,7 +202,7 @@ function App() {
             }
           />
           <Route
-            path="/MovieInfo/movie-info"
+            path="/movie-info"
             element={
               <>
                 <Navbar
@@ -215,7 +215,7 @@ function App() {
             }
           />
           <Route
-            path="/MovieInfo/question"
+            path="/question"
             element={
               <>
                 <Navbar
