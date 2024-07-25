@@ -163,7 +163,7 @@ function App() {
             }
           />
           <Route
-            path="/daily"
+            path="/MovieInfo/daily"
             element={
               <>
                 <Navbar
@@ -176,7 +176,7 @@ function App() {
             }
           />
           <Route
-            path="/search"
+            path="/MovieInfo/search"
             element={
               <>
                 <Navbar
@@ -189,7 +189,7 @@ function App() {
             }
           />
           <Route
-            path="/update"
+            path="/MovieInfo/update"
             element={
               <>
                 <Navbar
@@ -202,7 +202,7 @@ function App() {
             }
           />
           <Route
-            path="/movie-info"
+            path="/MovieInfo/movie-info"
             element={
               <>
                 <Navbar
@@ -215,7 +215,7 @@ function App() {
             }
           />
           <Route
-            path="/question"
+            path="/MovieInfo/question"
             element={
               <>
                 <Navbar

@@ -118,7 +118,7 @@ const FooterIcon = styled.li`
 function NavBar({ page = "home", minimize = true, handleMinimize }) {
   return (
     <Container minimize={minimize}>
-      <Link to="/MovieInfo/">
+      <Link to="/">
         <Logo src="./MoverLogo.png" />
       </Link>
       <NavList>
